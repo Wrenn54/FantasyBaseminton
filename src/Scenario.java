@@ -58,24 +58,24 @@ public class Scenario {
                         } else {
                             return (leftFielder.fld - 30) > roll;
                         }
-                }
+                    }
                     case MIDDLE -> {
                         if (centerFielder.spd<batter.pwr) {
                             return false;
                         } else {
                             return (centerFielder.fld - 30) > roll;
                         }
-                }
+                    }
                     case RIGHT -> {
                         if (rightFielder.spd<batter.pwr) {
                             return false;
                         } else {
                             return (rightFielder.fld - 30) > roll;
                         }
-                }
+                    }
                     default -> {
                         return false;
-                }
+                    }
                 }
             }
 
@@ -104,7 +104,7 @@ public class Scenario {
         if (caught) {
             fielder.catches++;
             game.battingTeam.battingPositions.currentBatter.totalHitsCaught++;
-            System.out.println("Birdie caught");
+            System.out.println("Birdie caught\n");
             game.outs++;
 
             if (game.outs == 3){
@@ -120,11 +120,9 @@ public class Scenario {
                 }
             }
         } else {
-            
-            int runs;
-
             if (third == Third.RIGHT ? (int)(Math.random()*100) + 1 < 30 + fielder.spd - batter.spd : (int)(Math.random()*100) + 1 < 10 + fielder.fld - batter.spd){ 
-                runs = game.field.calculateRuns(game.field.emptyPlayer);
+                game.field.calculateRuns(batter);
+                game.field.removePlayerOnBase(Third.RIGHT);
                 fielder.tagouts++;
                 game.outs++;
                 System.out.println(batter.name + " gets tagged out while running to 1st base!\n");
