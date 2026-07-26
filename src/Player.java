@@ -100,4 +100,20 @@ public class Player {
     public void calculateAverage(){
         this.avg = (int)Math.round((pwr + con + spd + awr + fld + vel + acc)/7.0);
     }
+
+    public void clearRecord(){
+        peopleStruckOut = 0;
+        peopleWalked = 0;
+        timesWalked = 0;
+        timesStruckOut = 0;
+        totalAtBats = 0;
+        totalHits = 0;
+        totalHitsCaught = 0;
+        catches = 0;
+        tagouts = 0;
+        runsAllowed = 0;
+        runAssists = 0;
+        ballsThrown = 0;
+        strikesThrown = 0;
+    }
 }
