@@ -54,6 +54,9 @@ public class Field {
 
         if (run){
             System.out.println(thirdBaseRunner.name + " just scored\n");
+            newRunner.runAssists++;
+            game.fieldingTeam.fieldingPositions.currentPitcher.runsAllowed++;
+            game.battingTeam.score++;
         }
 
         thirdBaseRunner = secondBaseRunner;

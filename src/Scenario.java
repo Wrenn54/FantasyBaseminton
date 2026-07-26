@@ -22,7 +22,7 @@ public class Scenario {
     }
 
     public boolean calculateHit(){
-        int goal = pitcher.vel+60;
+        int goal = pitcher.vel - batter.con + 60;
         if (goal < 10) {
             goal = 10;
         } else if (goal > 90) {
