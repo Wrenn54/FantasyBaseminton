@@ -7,9 +7,11 @@ public class BattingPositions {
 
     public Player currentBatter;
     private ArrayList<Player> battingOrder;
+    private Game game;
 
-    public BattingPositions(ArrayList<Player> battingOrder){
+    public BattingPositions(ArrayList<Player> battingOrder, Game game){
         this.battingOrder = battingOrder;
+        this.game = game;
         nextBatter();
     }
 
@@ -19,6 +21,8 @@ public class BattingPositions {
             currentBatterIndex = 0;
         }
         
+        game.strikes = 0;
+        game.balls = 0;
         currentBatter = battingOrder.get(currentBatterIndex);
         
         this.currentBatter.totalAtBats++;
