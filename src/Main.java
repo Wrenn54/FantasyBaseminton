@@ -1,4 +1,5 @@
 
+import enums.GameType;
 import gui.UserInterfaceBase;
 import static java.lang.Integer.parseInt;
 import java.text.DecimalFormat;
@@ -31,7 +32,10 @@ public class Main {
         System.out.println("\nPlease input your choice for the second team:");
         int teamChoiceTwo = parseInt(main.scanner.nextLine())-1;
 
-        Game testGame = new Game(main.allTeams.get(teamChoiceOne), main.allTeams.get(teamChoiceTwo));
+        System.out.println("\nType 1 for a playoff game or type 2 for a regular season game");
+        GameType gameTypeChoice = (parseInt(main.scanner.nextLine()) == 1 ? GameType.PLAYOFF : GameType.REGULAR);
+
+        Game testGame = new Game(main.allTeams.get(teamChoiceOne), main.allTeams.get(teamChoiceTwo), gameTypeChoice);
         testGame.runGame();
 
         for(Team team: new ArrayList<Team>(List.of(testGame.teamOne, testGame.teamTwo))){

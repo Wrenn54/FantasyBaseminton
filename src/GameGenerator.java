@@ -4,7 +4,12 @@ import java.util.Comparator;
 
 public class GameGenerator {
 
-    public GameGenerator(Team teamOne, Team teamTwo) {
+    private Game game;
+
+    public GameGenerator(Team teamOne, Team teamTwo, Game game) {
+
+        this.game = game;
+
         generateBattingOrder(teamOne);
         generateFieldingPositions(teamOne);
 
@@ -38,9 +43,8 @@ public class GameGenerator {
     }
 
     private void generateBattingOrder(Team team){
-        ArrayList<Player> battingOrder = new ArrayList<>();
-        battingOrder.addAll(team.roster);
+        ArrayList<Player> battingOrder = new ArrayList<>(team.roster);
         Collections.shuffle(battingOrder);
-        team.battingPositions = new BattingPositions(battingOrder);
+        team.battingPositions = new BattingPositions(battingOrder, game);
     }
 }
