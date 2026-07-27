@@ -120,27 +120,27 @@ public class Scenario {
                 }
             }
         } else {
+            
+            game.field.calculateRuns(batter);
+            
             if (third == Third.RIGHT ? (int)(Math.random()*100) + 1 < 30 + fielder.spd - batter.spd : (int)(Math.random()*100) + 1 < 10 + fielder.fld - batter.spd){ 
-                game.field.calculateRuns(batter);
                 game.field.removePlayerOnBase(Third.RIGHT);
                 fielder.tagouts++;
                 game.outs++;
                 System.out.println(batter.name + " gets tagged out while running to 1st base!\n");
-            } else { //No tagout on the way to first
-                game.field.calculateRuns(batter);
             }
         }
     }
 
     public void runPlay(){
         if(calculateHit()){ //Yes hit
-            System.out.println("Birdie is hit by " + batter.name);
+            System.out.println("The birdie is hit by " + batter.name);
             batter.totalHits++;
             calculateTagOut();
+            game.battingTeam.battingPositions.nextBatter();
             if (game.outs == 3){
                 return;
             }
-            game.battingTeam.battingPositions.nextBatter();
         } else { //No hit
             if(calculateStrike()){ //Yes strike
                 game.strikes++;
