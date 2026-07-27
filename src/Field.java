@@ -53,7 +53,7 @@ public class Field {
         boolean run = !thirdBaseRunner.equals(emptyPlayer);
 
         if (run){
-            System.out.println(thirdBaseRunner.name + " just scored\n");
+            System.out.println("\n" + thirdBaseRunner.name + " just scored.");
             newRunner.runAssists++;
             game.fieldingTeam.fieldingPositions.currentPitcher.runsAllowed++;
             game.battingTeam.score++;
@@ -64,8 +64,7 @@ public class Field {
         firstBaseRunner = newRunner;
 
         System.out.println("\nCurrent people on base are\n1st: " + firstBaseRunner.name + "\n2nd: " + secondBaseRunner.name + "\n3rd: " + thirdBaseRunner.name+ "\n");
-
-        game.battingTeam.battingPositions.nextBatter();
+        
         return run ? 1 : 0;
     }
 }
