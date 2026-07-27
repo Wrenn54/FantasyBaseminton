@@ -7,11 +7,13 @@ import java.util.List;
 
 public class Game {
 
-    private ArrayList<Inning> innings = new ArrayList<>();
+    private final ArrayList<Inning> innings = new ArrayList<>(List.of(Inning.TOP1, Inning.BOTTOM1, Inning.TOP2, Inning.BOTTOM2, Inning.TOP3, Inning.BOTTOM3, Inning.TOP4, Inning.BOTTOM4));
+
+    Announcer announcer = new Announcer();
 
     public Team teamOne;
     public Team teamTwo;
-    private GameType gameType;
+    private final GameType gameType;
 
     private int teamOneTieBreakerPoints;
     private int teamTwoTieBreakerPoints;
@@ -25,7 +27,6 @@ public class Game {
     public int balls;
     
     public Game (Team teamOne, Team teamTwo, GameType gameType){
-        innings.addAll(List.of(Inning.TOP1, Inning.BOTTOM1, Inning.TOP2, Inning.BOTTOM2, Inning.TOP3, Inning.BOTTOM3, Inning.TOP4, Inning.BOTTOM4));
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;
         this.gameType = gameType;
@@ -88,13 +89,13 @@ public class Game {
         if (strikes > 3){
             fieldingTeam.fieldingPositions.currentPitcher.peopleStruckOut++; //Stat
             batter.timesStruckOut++;
-            System.out.println(batter.name + " struck out\n");
+            System.out.println(announcer.strikeoutCall(batter, pitcher) + "\n");
             battingTeam.battingPositions.nextBatter();
             outs++;
         } else if (balls > 3){
             fieldingTeam.fieldingPositions.currentPitcher.peopleWalked++; //Stat
             batter.timesWalked++;
-            System.out.println(batter.name + " got walked\n");
+            System.out.println(batter.name + " got walked");
             battingTeam.score += field.calculateRuns(batter);
             battingTeam.battingPositions.nextBatter();
         }
@@ -113,14 +114,13 @@ public class Game {
 
             switch (gameType) {
                 
-                case PLAYOFF:
-                
+                case PLAYOFF -> {
                     ArrayList<Player> teamOneBatters = new ArrayList<>(teamOne.roster);
 
                     Collections.sort(teamOneBatters, new Comparator<Player>() {
                         @Override
                         public int compare(Player o1, Player o2) {
-                        return Integer.compare(o2.spd + o2.awr + o2.con + o2.pwr, o1.spd + o1.awr + o1.con + o1.pwr);
+                            return Integer.compare(o2.spd + o2.awr + o2.con + o2.pwr, o1.spd + o1.awr + o1.con + o1.pwr);
                         }
                     });
                     teamOneBatters.remove(3);
@@ -131,7 +131,7 @@ public class Game {
                     Collections.sort(teamTwoBatters, new Comparator<Player>() {
                         @Override
                         public int compare(Player o1, Player o2) {
-                        return Integer.compare(o2.spd + o2.awr + o2.con + o2.pwr, o1.spd + o1.awr + o1.con + o1.pwr);
+                            return Integer.compare(o2.spd + o2.awr + o2.con + o2.pwr, o1.spd + o1.awr + o1.con + o1.pwr);
                         }
                     });
                     teamTwoBatters.remove(3);
@@ -192,12 +192,15 @@ public class Game {
                     } else {
                         return findWinner();
                     }
+                }
             
-                case REGULAR:
+                case REGULAR -> {
                     return teamOne;
+                }
 
-                default:
+                default -> {
                     return teamOne;
+                }
             }
         }
     }
