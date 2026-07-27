@@ -66,13 +66,13 @@ public class Game {
             }
 
             while (outs < 3){
-                runScenario(fieldingTeam.fieldingPositions.choosePitcher(currentInning), battingTeam.battingPositions.currentBatter, 3);
+                runScenario(fieldingTeam.fieldingPositions.choosePitcher(currentInning), battingTeam.battingPositions.currentBatter, false);
             }
         }
         return findWinner();
     }
 
-    public void runScenario(Player pitcher, Player batter, int maxOuts){
+    public void runScenario(Player pitcher, Player batter, boolean tiebreakerGame){
         Scenario currentAtBat = new Scenario(this, field,
             pitcher, 
             batter, 
@@ -82,7 +82,7 @@ public class Game {
 
         currentAtBat.runPlay();
 
-        if(outs >= maxOuts){
+        if(outs >= (tiebreakerGame ? 1 : 3)){
             return;
         }
 
@@ -90,14 +90,18 @@ public class Game {
             fieldingTeam.fieldingPositions.currentPitcher.peopleStruckOut++; //Stat
             batter.timesStruckOut++;
             System.out.println(announcer.strikeoutCall(batter, pitcher) + "\n");
-            battingTeam.battingPositions.nextBatter();
+            if(!tiebreakerGame){
+                battingTeam.battingPositions.nextBatter();
+            }
             outs++;
         } else if (balls > 3){
             fieldingTeam.fieldingPositions.currentPitcher.peopleWalked++; //Stat
             batter.timesWalked++;
             System.out.println(batter.name + " got walked");
             battingTeam.score += field.calculateRuns(batter);
-            battingTeam.battingPositions.nextBatter();
+            if(!tiebreakerGame){
+                battingTeam.battingPositions.nextBatter();
+            }
         }
     }
 
@@ -149,8 +153,8 @@ public class Game {
                         outs = 0;
                         field.clearAllBases();
 
-                        while (outs < 1){
-                            runScenario(fieldingTeam.fieldingPositions.pitcherOne, batter, 1);
+                        while (outs < 1) {
+                            runScenario(fieldingTeam.fieldingPositions.pitcherOne, batter, true);
                             if (!field.firstBaseRunner.equals(field.emptyPlayer)){
                                 outs++;
                                 teamOneTieBreakerPoints++;
@@ -173,7 +177,7 @@ public class Game {
                         field.clearAllBases();
 
                         while (outs < 1){
-                            runScenario(fieldingTeam.fieldingPositions.pitcherOne, batter, 1);
+                            runScenario(fieldingTeam.fieldingPositions.pitcherOne, batter, true);
                             if (!field.firstBaseRunner.equals(field.emptyPlayer)){
                                 outs++;
                                 teamTwoTieBreakerPoints++;

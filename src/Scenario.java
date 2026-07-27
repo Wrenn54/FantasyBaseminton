@@ -33,7 +33,7 @@ public class Scenario {
 
     public boolean calculateStrike() {
         int goal = 20 + (100-pitcher.acc);
-        return (int)(Math.random()*100)+1 >= goal;
+        return (int)(Math.random()*100)+1 > goal;
     }
 
     public Third calculateThird(){
@@ -103,7 +103,7 @@ public class Scenario {
 
         if (caught) {
             fielder.catches++;
-            game.battingTeam.battingPositions.currentBatter.totalHitsCaught++;
+            batter.totalHitsCaught++;
             System.out.println("Birdie caught\n");
             game.outs++;
 
@@ -135,7 +135,7 @@ public class Scenario {
     public void runPlay(){
         if(calculateHit()){ //Yes hit
             System.out.println("Birdie is hit by " + batter.name);
-            game.battingTeam.battingPositions.currentBatter.totalHits++;
+            batter.totalHits++;
             calculateTagOut();
             if (game.outs == 3){
                 return;
@@ -144,10 +144,10 @@ public class Scenario {
         } else { //No hit
             if(calculateStrike()){ //Yes strike
                 game.strikes++;
-                game.fieldingTeam.fieldingPositions.currentPitcher.strikesThrown++;
+                pitcher.strikesThrown++;
             } else { //No strike
                 game.balls++;
-                game.fieldingTeam.fieldingPositions.currentPitcher.ballsThrown++;
+                pitcher.ballsThrown++;
             }
         }
     }
