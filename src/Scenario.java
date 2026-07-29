@@ -135,11 +135,11 @@ public class Scenario {
     public void runPlay(){
         if(calculateHit()){ //Yes hit
             System.out.println("The birdie is hit by " + batter.name);
+            
             batter.totalHits++;
             calculateTagOut();
-            game.battingTeam.battingPositions.nextBatter();
-            if (game.outs == 3){
-                return;
+            if (game.outs != 3){
+                game.battingTeam.battingPositions.nextBatter();
             }
         } else { //No hit
             if(calculateStrike()){ //Yes strike

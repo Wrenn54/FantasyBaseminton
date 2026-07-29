@@ -50,12 +50,6 @@ public class Game {
             strikes = 0;
             balls = 0;
             field.clearAllBases();
-            
-            if (currentInning.getName().equals("BOTTOM4")){
-                if (teamOne.score > teamTwo.score){
-                    return teamOne;
-                }
-            }
 
             if (currentInning.getName().contains("TOP")) {
                 battingTeam = teamOne;
@@ -63,6 +57,16 @@ public class Game {
             } else {
                 battingTeam = teamTwo;
                 fieldingTeam = teamOne;
+            }
+
+            if (currentInning.getName().equals("BOTTOM4")){
+                if (teamOne.score > teamTwo.score){
+                    return teamOne;
+                }
+            }
+
+            if (!(currentInning.getName().equals("TOP1"))){
+                battingTeam.battingPositions.nextBatter();
             }
 
             while (outs < 3){
@@ -147,6 +151,7 @@ public class Game {
                     fieldingTeam = teamTwo;
 
                     System.out.println("First up are the " + teamOne.fullName + "\n");
+                    battingTeam.battingPositions.nextBatter();
 
                     for (Player batter : teamOneBatters){
                         
@@ -165,7 +170,8 @@ public class Game {
                     System.out.println("The " + teamOne.fullName + " are at " + teamOneTieBreakerPoints + " tiebreaker point(s).\n");
 
                     System.out.println("Next up are the " + teamOne.fullName + "\n");
-                    
+                    battingTeam.battingPositions.nextBatter();
+
                     teamTwoTieBreakerPoints = 0;
 
                     battingTeam = teamTwo;
