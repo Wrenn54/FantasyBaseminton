@@ -101,7 +101,7 @@ public class Game {
         } else if (balls > 3){
             fieldingTeam.fieldingPositions.currentPitcher.peopleWalked++; //Stat
             batter.timesWalked++;
-            System.out.println(batter.name + " got walked");
+            System.out.println(announcer.walkCall(batter, pitcher) + "\n");
             battingTeam.score += field.calculateRuns(batter);
             if(!tiebreakerGame){
                 battingTeam.battingPositions.nextBatter();
@@ -151,10 +151,10 @@ public class Game {
                     fieldingTeam = teamTwo;
 
                     System.out.println("First up are the " + teamOne.fullName + "\n");
-                    battingTeam.battingPositions.nextBatter();
 
                     for (Player batter : teamOneBatters){
                         
+                        batter.totalAtBats++;
                         outs = 0;
                         field.clearAllBases();
 
@@ -170,7 +170,6 @@ public class Game {
                     System.out.println("The " + teamOne.fullName + " are at " + teamOneTieBreakerPoints + " tiebreaker point(s).\n");
 
                     System.out.println("Next up are the " + teamOne.fullName + "\n");
-                    battingTeam.battingPositions.nextBatter();
 
                     teamTwoTieBreakerPoints = 0;
 
@@ -179,6 +178,7 @@ public class Game {
 
                     for (Player batter : teamTwoBatters){
                         
+                        batter.totalAtBats++;
                         outs = 0;
                         field.clearAllBases();
 
