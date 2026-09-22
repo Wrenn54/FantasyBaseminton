@@ -10,7 +10,14 @@ public enum Inning {
         this.name = name;
     }
 
-    public String getName(){
+    public String getString(){
         return name;
+    }
+
+    public String getName(){
+        return (name.substring(0, 3).equals("TOP") ? "top" : "bottom") + " of the "
+                + (name.contains("1") ? "first"
+                        : (name.contains("2") ? "second" : (name.contains("3") ? "third" : "fourth")))
+                + " inning.";
     }
 }

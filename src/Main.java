@@ -1,44 +1,25 @@
 
-import enums.GameType;
-import gui.UserInterfaceBase;
-import static java.lang.Integer.parseInt;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
+    public InterfaceBase gameInterface;
+
     public ArrayList<Team> allTeams = new ArrayList<>();
     public ArrayList<Player> allPlayers = new ArrayList<>();
-    private UserInterfaceBase userInterfaceBase = new UserInterfaceBase();
-
-    Scanner scanner = new Scanner(System.in);
-
-    private Game testGame;
 
     public static void main(String[] args) {
         Main main = new Main();
         main.initializeTeams();
         main.initializePlayers();
 
-        for(int x=0; x<10; x++){
-            System.out.print(x+1 + " for " + main.allTeams.get(x).fullName + "\n");
-        }
-        
-        System.out.println("\nPlease input your choice for the first team:");
-        int teamChoiceOne = parseInt(main.scanner.nextLine())-1;
-        
-        System.out.println("\nPlease input your choice for the second team:");
-        int teamChoiceTwo = parseInt(main.scanner.nextLine())-1;
+        main.gameInterface = new InterfaceBase(main);
+    }
 
-        System.out.println("\nType 1 for a playoff game or type 2 for a regular season game");
-        GameType gameTypeChoice = (parseInt(main.scanner.nextLine()) == 1 ? GameType.PLAYOFF : GameType.REGULAR);
-
-        Game testGame = new Game(main.allTeams.get(teamChoiceOne), main.allTeams.get(teamChoiceTwo), gameTypeChoice);
-        testGame.runGame();
-
-        for(Team team: new ArrayList<Team>(List.of(testGame.teamOne, testGame.teamTwo))){
+    public void printFinalStats(Game game){
+        for(Team team: new ArrayList<Team>(List.of(game.teamOne, game.teamTwo))){
             System.out.println("\n" + team.fullName + ": " + team.score + "\n");
             for (Player player : team.roster){
                 for(int x=0; x<24-player.name.length(); x++){

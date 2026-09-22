@@ -11,7 +11,7 @@ public class FieldingPositions {
     public Player currentPitcher;
 
     public Player choosePitcher(Inning inning){
-        currentPitcher = (inning.getName().contains("1") || inning.getName().contains("2")) ? pitcherOne : pitcherTwo;
+        currentPitcher = (inning.getString().contains("1") || inning.getString().contains("2")) ? pitcherOne : pitcherTwo;
         return currentPitcher;
     }
 }

@@ -7,7 +7,6 @@ public class GameGenerator {
     private Game game;
 
     public GameGenerator(Team teamOne, Team teamTwo, Game game) {
-
         this.game = game;
 
         generateBattingOrder(teamOne);

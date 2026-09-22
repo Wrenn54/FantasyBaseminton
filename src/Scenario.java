@@ -104,7 +104,7 @@ public class Scenario {
         if (caught) {
             fielder.catches++;
             batter.totalHitsCaught++;
-            System.out.println("Birdie caught\n");
+            game.announcer.birdieCaughtCall(batter.name, fielder.name);
             game.outs++;
 
             if (game.outs == 3){
@@ -134,7 +134,7 @@ public class Scenario {
 
     public void runPlay(){
         if(calculateHit()){ //Yes hit
-            System.out.println("The birdie is hit by " + batter.name);
+            game.announcer.birdieHitcall(batter.name);
             
             batter.totalHits++;
             calculateTagOut();
@@ -145,9 +145,11 @@ public class Scenario {
             if(calculateStrike()){ //Yes strike
                 game.strikes++;
                 pitcher.strikesThrown++;
+                game.announcer.strikeThrownCall(batter.name, pitcher.name);
             } else { //No strike
                 game.balls++;
                 pitcher.ballsThrown++;
+                game.announcer.ballThrownCall(batter.name, pitcher.name);
             }
         }
     }
